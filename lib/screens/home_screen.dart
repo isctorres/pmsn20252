@@ -41,7 +41,26 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const UserAccountsDrawerHeader(
+              accountName: Text('Rubensin Torres Frias'), 
+              accountEmail: Text('ruben.torres@itcelaya.edu.mx'),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage('https://i.pravatar.cc/300'),
+              ),
+            ),
+            ListTile(
+              leading: Image.asset('assets/icon_mandalor.png'),
+              title: Text('List Movies'),
+              subtitle: Text('Database Movies'),
+              trailing: Icon(Icons.chevron_right),
+              onTap: () => Navigator.pushNamed(context,"/listdb"),
+            )
+          ],
+        ),
+      ),
       body: Center(child: Text("Menu de opciones"),),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 30),
