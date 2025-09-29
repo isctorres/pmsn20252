@@ -24,7 +24,7 @@ class _ListMoviesState extends State<ListMovies> {
       appBar: AppBar(title: Text("Lista de Peliculas :)"),
         actions: [
           IconButton(
-            onPressed: ()=>Navigator.pushNamed(context,"/add"), 
+            onPressed: ()=>Navigator.pushNamed(context,"/add").then((value) => setState(() {}),), 
             icon: Icon(Icons.add)
           )
         ],
@@ -37,13 +37,38 @@ class _ListMoviesState extends State<ListMovies> {
           }else{
             if(snapshot.hasData){
               return snapshot.data!.isNotEmpty 
-              ? ListView.builder(
+              ? ListView.separated(
+                separatorBuilder: (context, index) => Divider(),
+                itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final objM = snapshot.data![index];
                   return Container(
                     height: 100,
-                    color: Colors.black,
-                    child: Text(objM.nameMovie!),
+                    color: Colors.grey,
+                    child: Column(
+                      children: [
+                        Text(objM.nameMovie!),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: (){}, 
+                              icon: Icon(Icons.edit)
+                            ),
+                            //Expanded(child: Container()),
+                            IconButton(
+                              onPressed: () async {
+                                return showDialog(
+                                  context: context, 
+                                  builder: (context) => _buildAlertDialog(),
+                                );
+                              }, 
+                              icon: Icon(Icons.delete)
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   );
                 },
               )
@@ -56,4 +81,22 @@ class _ListMoviesState extends State<ListMovies> {
       ),
     );
   }
+
+  Widget _buildAlertDialog(){
+    return AlertDialog(
+      title: Text('Atención :)'),
+      content: Text('¿Deseas eliminar el registro?'),
+      actions: [
+        TextButton(
+          onPressed: (){}, 
+          child: Text('Aceptar', style: TextStyle(color: Colors.black),)
+        ),
+        TextButton(
+          onPressed: ()=>Navigator.pop(context), 
+          child: Text('Cancelar', style: TextStyle(color: Colors.black),)
+        )
+      ],
+    );
+  }
+
 }
