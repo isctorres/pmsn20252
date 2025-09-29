@@ -21,7 +21,14 @@ class _ListMoviesState extends State<ListMovies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Lista de Peliculas :)"),),
+      appBar: AppBar(title: Text("Lista de Peliculas :)"),
+        actions: [
+          IconButton(
+            onPressed: ()=>Navigator.pushNamed(context,"/add"), 
+            icon: Icon(Icons.add)
+          )
+        ],
+      ),
       body: FutureBuilder(
         future: moviesDB!.SELECT(), 
         builder: (context, snapshot) {
@@ -29,7 +36,8 @@ class _ListMoviesState extends State<ListMovies> {
             return Center(child: Text('Something was wrong!'),);
           }else{
             if(snapshot.hasData){
-              return ListView.builder(
+              return snapshot.data!.isNotEmpty 
+              ? ListView.builder(
                 itemBuilder: (context, index) {
                   final objM = snapshot.data![index];
                   return Container(
@@ -38,7 +46,8 @@ class _ListMoviesState extends State<ListMovies> {
                     child: Text(objM.nameMovie!),
                   );
                 },
-              );
+              )
+              : Center(child: Text('No existen registros'),);
             }else{
               return Center(child: CircularProgressIndicator());
             }

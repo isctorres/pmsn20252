@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmsn20252/screens/add_movie_screen.dart';
 import 'package:pmsn20252/screens/home_screen.dart';
 import 'package:pmsn20252/screens/list_movies.dart';
 import 'package:pmsn20252/screens/login_screen.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
           theme: value ? ThemeApp.darkTheme() : ThemeApp.lightTheme(),
           routes: {
             "/home" : (context) => const HomeScreen(),
-            "/listdb" : (context) => const ListMovies()
+            "/listdb" : (context) => const ListMovies(),
+            "/add" : (context) => const AddMovieScreen()
           },  
           title: 'Material App',
           home: LoginScreen(),
